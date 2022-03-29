@@ -1,9 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '../../entities/user.entity';
+import { Order } from '../../entities/orders.entitys';
 import { CreateUserDtos, UpdateUserDtos } from '../../dtos/user.dtos';
+import { ProductsService } from '../../../products/services/products/products.service';
 
 @Injectable()
 export class UsersService {
+  constructor(private productsService: ProductsService) {}
   private countId = 1;
   private users: User[] = [
     {
@@ -55,5 +58,14 @@ export class UsersService {
     }
     this.users.splice(index, 1);
     return true;
+  }
+  getOrdersByUser(id: number): Order {
+    const user = this.findOne(id);
+
+    return {
+      date: new Date(),
+      user,
+      products: this.productsService.findAll(),
+    };
   }
 }

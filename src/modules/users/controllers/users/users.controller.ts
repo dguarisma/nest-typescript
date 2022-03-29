@@ -33,6 +33,13 @@ export class UsersController {
       message: 'User detail',
     };
   }
+  @Get(':id/orders')
+  getUserSale(@Param('id', ParseIntPipe) id: number) {
+    const userNew = this.usersService.getOrdersByUser(id);
+    return {
+      ...userNew,
+    };
+  }
 
   @Post()
   create(@Body() payload: CreateUserDtos) {
