@@ -8,7 +8,7 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { ParseIntPipe } from '../../../../common/parse-int.pipe';
 import { CategoriesService } from '../../services/categories/categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from '../../dtos/category.dtos';
 
