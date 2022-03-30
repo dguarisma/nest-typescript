@@ -7,14 +7,9 @@ import {
   Body,
   Put,
   Delete,
-  ///HttpStatus,
-  //HttpCode,
-  //Res,
-  //ParseIntPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-//import { Response } from 'express';
 import { ParseIntPipe } from '../../../../common/parse-int.pipe';
 import { ProductsService } from '../../services/products/products.service';
 import { CreateProductDto, UpdateProductDto } from '../../dtos/product.dto';
