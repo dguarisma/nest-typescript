@@ -8,10 +8,13 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+
 import { ParseIntPipe } from '../../../../common/parse-int.pipe';
 import { BrandsService } from '../../services/brands/brands.service';
-import { CreateBrandDtos, UpdateBrandDtos } from '../../dtos/brand.dtos';
+import { CreateBrandDtos, UpdateBrandDtos } from '../../dtos/brand.dto';
 
+@ApiTags('Brands')
 @Controller('brands')
 export class BrandsController {
   constructor(private brandsService: BrandsService) {}

@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +12,19 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  await app.listen(3000);
+
+  const config = new DocumentBuilder()
+    .setTitle('API')
+    .setDescription('Store nestjs')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
+  app.enableCors({
+    origin: '*',
+    methods: ['GET,PUT,POST,DELETE'],
+    optionsSuccessStatus: 204,
+  });
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
