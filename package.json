@@ -74,7 +74,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }, "engines": {
+  },
+  "engines": {
     "node": ">= 14"
   }
 }
