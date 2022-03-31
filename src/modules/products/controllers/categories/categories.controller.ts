@@ -20,17 +20,17 @@ export class CategoriesController {
   constructor(private categoryServices: CategoriesService) {}
 
   @Get('')
-  get(@Query('limit') limit = 100, @Query('offset') offset = 0) {
+  async get(@Query('limit') limit = 100, @Query('offset') offset = 0) {
     return {
-      data: this.categoryServices.findAll(),
+      data: await this.categoryServices.findAll(),
       limit,
       offset,
     };
   }
 
   @Get(':id')
-  getCategoryDetails(@Param('id', ParseIntPipe) id: number) {
-    const details = this.categoryServices.findOne(id);
+  async getCategoryDetails(@Param('id', ParseIntPipe) id: number) {
+    const details = await this.categoryServices.findOne(id);
     return {
       data: details,
       message: 'Category detail',
@@ -38,8 +38,8 @@ export class CategoriesController {
   }
 
   @Post()
-  create(@Body() payload: CreateCategoryDto) {
-    const categoryNew = this.categoryServices.create(payload);
+  async create(@Body() payload: CreateCategoryDto) {
+    const categoryNew = await this.categoryServices.create(payload);
     return {
       message: 'Category Create',
       categoryNew,
@@ -47,11 +47,11 @@ export class CategoriesController {
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateCategoryDto,
   ) {
-    const categoryUpdate = this.categoryServices.update(id, payload);
+    const categoryUpdate = await this.categoryServices.update(id, payload);
     return {
       message: 'Category update',
       categoryUpdate,
@@ -59,11 +59,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    const categoryDelete = this.categoryServices.delete(id);
-    return {
-      message: 'Category delete',
-      categoryDelete,
-    };
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return await this.categoryServices.delete(id);
   }
 }

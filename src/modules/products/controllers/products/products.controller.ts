@@ -20,19 +20,18 @@ export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
   @Get('')
-  get(@Query('limit') limit = 100, @Query('offset') offset = 0) {
+  async get(@Query('limit') limit = 100, @Query('offset') offset = 0) {
     return {
-      data: this.productsService.findAll(),
+      data: await this.productsService.findAll(),
       limit,
       offset,
     };
   }
-
   // Agregando HttpCode y HttpStatus, personalizando el response
   // @HttpCode(HttpStatus.OK)
   @Get(':id')
-  getDetailsProduct(@Param('id', ParseIntPipe) id: number) {
-    const details = this.productsService.findOne(id);
+  async getDetailsProduct(@Param('id', ParseIntPipe) id: number) {
+    const details = await this.productsService.findOne(id);
     return {
       data: details,
       message: 'Product details',
@@ -40,30 +39,31 @@ export class ProductsController {
   }
 
   @Post()
-  create(@Body() payload: CreateProductDto) {
-    const productNew = this.productsService.create(payload);
+  async findAllcreate(@Body() payload: CreateProductDto) {
+    const productNew = await this.productsService.create(payload);
     return {
       data: productNew,
       message: 'Product Create',
     };
   }
+
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateProductDto,
   ) {
-    const productUpdate = this.productsService.update(id, payload);
+    const productUpdate = await this.productsService.update(id, payload);
     return {
       message: 'Product update',
       productUpdate,
     };
   }
+
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    const productUpdate = this.productsService.delete(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.productsService.delete(id);
     return {
       message: 'Product delete',
-      productUpdate,
     };
   }
 }

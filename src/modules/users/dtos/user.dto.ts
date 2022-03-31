@@ -10,9 +10,11 @@ export class CreateUserDtos {
   @IsString()
   @IsNotEmpty()
   @Length(6)
+  @ApiProperty({ description: 'The password of the user' })
   readonly password: string;
 
   @IsString()
+  @ApiProperty({ description: 'The role of the user' })
   readonly role: string;
 }
 

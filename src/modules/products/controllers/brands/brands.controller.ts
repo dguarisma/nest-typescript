@@ -20,17 +20,17 @@ export class BrandsController {
   constructor(private brandsService: BrandsService) {}
 
   @Get('')
-  get(@Query('limit') limit = 100, @Query('offset') offset = 0) {
+  async get(@Query('limit') limit = 100, @Query('offset') offset = 0) {
     return {
-      data: this.brandsService.findAll(),
+      data: await this.brandsService.findAll(),
       limit,
       offset,
     };
   }
 
   @Get(':id')
-  getBrandDetails(@Param('id', ParseIntPipe) id: number) {
-    const details = this.brandsService.findOne(id);
+  async getBrandDetails(@Param('id', ParseIntPipe) id: number) {
+    const details = await this.brandsService.findOne(id);
     return {
       data: details,
       message: 'Brand detail',
@@ -38,8 +38,8 @@ export class BrandsController {
   }
 
   @Post()
-  create(@Body() payload: CreateBrandDtos) {
-    const categoryNew = this.brandsService.create(payload);
+  async create(@Body() payload: CreateBrandDtos) {
+    const categoryNew = await this.brandsService.create(payload);
     return {
       message: 'Brand Create',
       categoryNew,
@@ -47,11 +47,11 @@ export class BrandsController {
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateBrandDtos,
   ) {
-    const BrandUpdate = this.brandsService.update(id, payload);
+    const BrandUpdate = await this.brandsService.update(id, payload);
     return {
       message: 'Brand update',
       BrandUpdate,
@@ -59,11 +59,10 @@ export class BrandsController {
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    const BrandDelete = this.brandsService.delete(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.brandsService.delete(id);
     return {
       message: 'Brand delete',
-      BrandDelete,
     };
   }
 }

@@ -20,55 +20,50 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get('')
-  getAll(@Query('limit') limit = 100, @Query('offset') offset = 0) {
+  async getAll(@Query('limit') limit = 100, @Query('offset') offset = 0) {
     return {
-      data: this.usersService.findAll(),
+      data: await this.usersService.findAll(),
       limit,
       offset,
     };
   }
 
   @Get(':id')
-  getUserDetails(@Param('id', ParseIntPipe) id: number) {
-    const details = this.usersService.findOne(id);
+  async getUserDetails(@Param('id', ParseIntPipe) id: number) {
+    const details = await this.usersService.findOne(id);
     return {
       data: details,
       message: 'User detail',
     };
   }
-  @Get(':id/orders')
-  getUserSale(@Param('id', ParseIntPipe) id: number) {
-    const userNew = this.usersService.getOrdersByUser(id);
-    return {
-      ...userNew,
-    };
-  }
-
+  // @Get(':id/orders')
+  // getUserSale(@Param('id', ParseIntPipe) id: number) {
+  //   const userNew = this.usersService.getOrdersByUser(id);
+  //   return {
+  //     ...userNew,
+  //   };
+  // }
   @Post()
-  create(@Body() payload: CreateUserDtos) {
-    const userNew = this.usersService.create(payload);
+  async create(@Body() payload: CreateUserDtos) {
+    const userNew = await this.usersService.create(payload);
     return {
       message: 'User Create',
       userNew,
     };
   }
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateUserDtos,
   ) {
-    const userUpdate = this.usersService.update(id, payload);
+    const userUpdate = await this.usersService.update(id, payload);
     return {
       message: 'User update',
       userUpdate,
     };
   }
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    const userUpdate = this.usersService.delete(id);
-    return {
-      message: 'User delete',
-      userUpdate,
-    };
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return await this.usersService.delete(id);
   }
 }

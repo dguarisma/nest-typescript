@@ -15,9 +15,11 @@ import { environment } from './enviroments';
       isGlobal: true,
       load: [config],
       validationSchema: joi.object({
-        API_KEY: joi.number().required(),
-        DATABASE_NAME: joi.string().required(),
+        POSTGRES_DB: joi.string().required(),
         DATABASE_PORT: joi.number().required(),
+        POSTGRES_USER: joi.string().required(),
+        POSTGRES_PASSWORD: joi.string().required(),
+        POSTGRES_HOST: joi.string().required(),
         PORT: joi.number().required(),
       }),
     }),
