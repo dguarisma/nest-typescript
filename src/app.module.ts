@@ -16,7 +16,7 @@ import { environment } from './enviroments';
       load: [config],
       validationSchema: joi.object({
         POSTGRES_DB: joi.string().required(),
-        DATABASE_PORT: joi.number().required(),
+        POSTGRES_PORT: joi.number().required(),
         POSTGRES_USER: joi.string().required(),
         POSTGRES_PASSWORD: joi.string().required(),
         POSTGRES_HOST: joi.string().required(),

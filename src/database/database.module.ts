@@ -12,16 +12,16 @@ const API_KEY = 'hola desde global';
     TypeOrmModule.forRootAsync({
       inject: [config.KEY],
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { namedb, port, user, password, host } = configService.database;
+        const { user, host, dbName, password, port } = configService.postgres;
         return {
           type: 'postgres',
           host,
           port,
           username: user,
           password,
-          database: namedb,
-          synchronize: true,
-          autoLoadEntities: true, // 👈 new attr
+          database: dbName,
+          synchronize: false,
+          autoLoadEntities: false,
         };
       },
     }),
@@ -34,11 +34,11 @@ const API_KEY = 'hola desde global';
     {
       provide: 'PG',
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { namedb, port, user, password, host } = configService.database;
+        const { user, host, dbName, password, port } = configService.postgres;
         const client = new Client({
           user,
           host,
-          database: namedb,
+          database: dbName,
           password,
           port,
         });
