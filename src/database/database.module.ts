@@ -17,11 +17,11 @@ const API_KEY = 'hola desde global';
           type: 'postgres',
           host,
           port,
-          username: user,
+          username: 'root',
           password,
           database: dbName,
           synchronize: false,
-          autoLoadEntities: false,
+          autoLoadEntities: true,
         };
       },
     }),
